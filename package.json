@@ -1,5 +1,5 @@
 {
-  "name": "@wingeek/artisan",
+  "name": "@wingeek/cli",
   "module": "src/index.tsx",
   "type": "module",
   "private": true,
