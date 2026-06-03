@@ -30,7 +30,7 @@ export const generateCommand = new Command()
     console.log(output);
   });
 
-function parseFormat(format: string): OutputFormat {
+export function parseFormat(format: string): OutputFormat {
   if (format === "json" || format === "md" || format === "text") {
     return format;
   }
@@ -38,7 +38,7 @@ function parseFormat(format: string): OutputFormat {
   return "text";
 }
 
-function parseDateRange(options: { date?: string; since?: string; until?: string }): DateRange {
+export function parseDateRange(options: { date?: string; since?: string; until?: string }): DateRange {
   const now = new Date();
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
@@ -53,7 +53,7 @@ function parseDateRange(options: { date?: string; since?: string; until?: string
   return { start, end };
 }
 
-function parseDate(dateStr: string): Date {
+export function parseDate(dateStr: string): Date {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr);
   if (!match) {
     throw new Error(`Invalid date format: ${dateStr}. Use YYYY-MM-DD.`);
@@ -62,7 +62,7 @@ function parseDate(dateStr: string): Date {
   return new Date(Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)));
 }
 
-async function loadCommits(dateRange: DateRange, repoFilter?: string): Promise<CommitEntry[]> {
+export async function loadCommits(dateRange: DateRange, repoFilter?: string): Promise<CommitEntry[]> {
   const hasFile = await exists(COMMITS_FILE);
   if (!hasFile) {
     return [];
@@ -101,7 +101,7 @@ async function loadCommits(dateRange: DateRange, repoFilter?: string): Promise<C
   return commits.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 }
 
-function groupByRepo(commits: CommitEntry[]): GroupedCommits[] {
+export function groupByRepo(commits: CommitEntry[]): GroupedCommits[] {
   const map = new Map<string, CommitEntry[]>();
 
   for (const commit of commits) {
@@ -120,7 +120,7 @@ function groupByRepo(commits: CommitEntry[]): GroupedCommits[] {
   }).sort((a, b) => a.repo.localeCompare(b.repo));
 }
 
-function formatWorklog(grouped: GroupedCommits[], format: OutputFormat): string {
+export function formatWorklog(grouped: GroupedCommits[], format: OutputFormat): string {
   switch (format) {
     case "json":
       return formatJson(grouped);
