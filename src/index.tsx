@@ -2,6 +2,7 @@ import { TextAttributes } from "@opentui/core";
 import { render } from "@opentui/solid";
 import { Command } from "@jsr/cliffy__command";
 import { worklogCommand } from "./commands/worklog/index.ts";
+import { publishCommand } from "./commands/publish/index.ts";
 
 const args = Bun.argv.slice(2);
 
@@ -22,5 +23,6 @@ if (args.length === 0) {
     .description("@wingeek/artisan — a CLI for builders")
     .version("0.0.1")
     .command("worklog", worklogCommand)
+    .command("publish", publishCommand)
     .parse(args);
 }
