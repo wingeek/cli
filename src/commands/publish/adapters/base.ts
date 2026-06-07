@@ -30,14 +30,21 @@ export interface ChannelAdapter {
 /** Copy text to system clipboard */
 async function copyToClipboard(text: string): Promise<boolean> {
   try {
-    const cmd = process.platform === "win32" ? "clip" : "pbcopy";
-    const proc = Bun.spawn(cmd, { stdin: "pipe" });
-    const writer = proc.stdin.getWriter();
-    await writer.write(new TextEncoder().encode(text));
-    writer.releaseLock();
-    await proc.stdin.close();
-    await proc.exited;
-    return true;
+    if (process.platform === "win32") {
+      const proc = Bun.spawn(["powershell", "-NoProfile", "-Command", `$Input | Set-Clipboard`], {
+        stdin: "pipe",
+      });
+      proc.stdin.write(text);
+      await proc.stdin.end();
+      await proc.exited;
+      return true;
+    } else {
+      const proc = Bun.spawn("pbcopy", { stdin: "pipe" });
+      proc.stdin.write(text);
+      await proc.stdin.end();
+      await proc.exited;
+      return true;
+    }
   } catch {
     return false;
   }

@@ -1,6 +1,8 @@
 import type { ChannelAdapter } from "./base.ts";
 import { GitHubPagesAdapter } from "./github-pages.ts";
 import { JuejinAdapter } from "./juejin.ts";
+import { WechatAdapter } from "./wechat.ts";
+import { TwitterAdapter } from "./twitter.ts";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
@@ -8,6 +10,8 @@ const registry = new Map<string, () => ChannelAdapter>();
 
 registry.set("github-pages", () => new GitHubPagesAdapter(join(process.cwd(), "docs")));
 registry.set("juejin", () => new JuejinAdapter());
+registry.set("wechat", () => new WechatAdapter());
+registry.set("twitter", () => new TwitterAdapter());
 
 export function getAdapter(channel: string): ChannelAdapter | undefined {
   const factory = registry.get(channel);
