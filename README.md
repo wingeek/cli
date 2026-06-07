@@ -1,4 +1,4 @@
-# @wingeek/cli
+# @wingeek/artisan
 
 To install dependencies:
 
