@@ -1,10 +1,27 @@
 {
   "name": "@wingeek/artisan",
+  "version": "0.1.0",
+  "description": "A CLI for builders — 结构化工作日志 + 多平台内容发布，本地优先",
+  "keywords": ["cli", "publish", "worklog", "content", "markdown", "juejin", "wechat", "twitter"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wingeek/artisan.git"
+  },
   "module": "src/index.tsx",
   "type": "module",
-  "private": true,
+  "bin": {
+    "artisan": "src/index.tsx"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "bun run --watch src/index.tsx",
+    "build": "bun run scripts/build.ts",
+    "build:bin": "bun run scripts/build.ts -- --compile",
     "test": "bun test"
   },
   "devDependencies": {

@@ -1,3 +1,5 @@
+import { ensureSolidTransformPlugin } from "@opentui/solid/bun-plugin";
+ensureSolidTransformPlugin();
 import { TextAttributes } from "@opentui/core";
 import { render } from "@opentui/solid";
 import { Command } from "@jsr/cliffy__command";
