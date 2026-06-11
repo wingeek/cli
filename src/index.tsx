@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import { ensureSolidTransformPlugin } from "@opentui/solid/bun-plugin";
 ensureSolidTransformPlugin();
 import { TextAttributes } from "@opentui/core";

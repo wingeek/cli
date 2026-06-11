@@ -1,5 +1,5 @@
 import { createSolidTransformPlugin } from "@opentui/solid/bun-plugin";
-import { renameSync } from "node:fs";
+import { renameSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 const compile = process.argv.includes("--compile");
@@ -37,9 +37,12 @@ if (compile) {
     process.exit(1);
   }
 
+  mkdirSync("release", { recursive: true });
   const compiled = bin.outputs[0].path;
-  const target = join(import.meta.dir, "..", "artisan.exe");
+  const isWin = process.platform === "win32";
+  const name = isWin ? "artisan.exe" : "artisan";
+  const target = join("release", name);
   renameSync(compiled, target);
   const size = (bin.outputs[0].size / 1024 / 1024).toFixed(1);
-  console.log(`✓ Compiled: artisan.exe (${size} MB)`);
+  console.log(`✓ Compiled: release/${name} (${size} MB)`);
 }
